@@ -1,0 +1,80 @@
+<div>
+  <h2>classes</h2>
+  <table>
+    <tr>
+      <th>Class Name</th>
+      <th>Location</th>
+      <th>Teacher Name</th>
+      <th></th>
+      <th></th>
+    </tr>
+    <tr   *ngFor="let class of classes" [ngClass]="{selected : slectedClassId === class.id}" (click)="setCurrentClass(class.id)">
+      
+      <td>{{class.id}}{{class.className}}</td>
+      <td>{{class.location}}</td>
+      <td>{{class.teacherName}}</td>
+      <td><a>Edit</a></td>
+      <td><a>Delete</a></td>
+    </tr>
+    <button (click)="showAddClassForm()">Add Class</button>
+  </table>
+  <div *ngIf="showAddClass">
+      <label>Class Name:
+        <input #className />
+      </label>
+      <label>Location:
+        <input #location />
+      </label>
+      <label>Teacher Name:
+        <input #teacherName />
+      </label>
+      <!-- (click) passes input value to add() and then clears the input -->
+      <button (click)="addClass(className.value,location.value,teacherName.value); className.value='';location.value='';teacherName.value=''">
+        Add Class
+      </button>
+      <button (click)="className.value='';location.value='';teacherName.value='';showAddClass = false;">
+        close
+      </button>
+    </div>
+
+  <div >
+  <h2>Biology</h2>
+  <table *ngIf="showStudents()" >
+    <tr>
+      <th>Student Name</th>
+      <th>Age</th>
+      <th>GPA</th>
+      <th></th>
+      <th></th>
+    </tr>
+    <tr *ngFor="let student of selectedClassStudents">
+      <td>{{student.name}}</td>
+      <td>{{student.age}}</td>
+      <td>{{student.gpa}}</td>
+      <td><a>Edit</a></td>
+      <td><a>Delete</a></td>
+    </tr>
+  </table>
+  <button (click)="showAddStudent = true;">
+      Add Student
+  </button>
+  <div *ngIf="showAddStudent">
+      <label>Student Name:
+        <input #studentName />
+      </label>
+      <label>Age:
+        <input #age />
+      </label>
+      <label>Gpa:
+        <input #gpa />
+      </label>
+      <!-- (click) passes input value to add() and then clears the input -->
+      <button (click)="addStudent(studentName.value,age.value,gpa.value); studentName.value='';age.value='';gpa.value='';showAddStudent = false;">
+        Add Student
+      </button>
+      <button (click)="studentName.value='';age.value='';gpa.value='';showAddStudent = false;">
+        close
+      </button>
+    </div>
+  </div> 
+</div>
