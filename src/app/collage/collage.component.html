@@ -59,8 +59,11 @@
       Add Student
   </button>
   <div *ngIf="showAddStudent">
-      <label>Student Name:
-        <input #studentName />
+      <label>First Name:
+        <input #firstName />
+      </label>
+      <label>Last Name:
+        <input #lastName />
       </label>
       <label>Age:
         <input #age />
@@ -69,10 +72,10 @@
         <input #gpa />
       </label>
       <!-- (click) passes input value to add() and then clears the input -->
-      <button (click)="addStudent(studentName.value,age.value,gpa.value); studentName.value='';age.value='';gpa.value='';showAddStudent = false;">
+      <button (click)="addStudent(firstName.value,lastName.value,age.value,gpa.value); studentName.value='';age.value='';gpa.value='';showAddStudent = false;">
         Add Student
       </button>
-      <button (click)="studentName.value='';age.value='';gpa.value='';showAddStudent = false;">
+      <button (click)="firstName.value='';lastName.value='';age.value='';gpa.value='';showAddStudent = false;">
         close
       </button>
     </div>

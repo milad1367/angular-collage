@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Class } from '../class'
+import { Class } from '../class';
+import { CollageService } from '../collage.service';
 
 @Component({
   selector: 'app-collage',
@@ -69,12 +70,12 @@ export class CollageComponent implements OnInit {
     return false
   }
 
-  addStudent(_name,_age,_gpa):void {
+  addStudent(_first_name,_last_name,_age,_gpa):void {
     let hasStudent = this.hasStudent(this.slectedClassId);
     if(!hasStudent) {
       this.classes[this.slectedClassId - 1].students = [];
     }
-    var student = {name:_name,age:_age,gpa:_gpa};
+    var student = {firstName:_first_name,lastName:_last_name,age:_age,gpa:_gpa};
     this.classes[this.slectedClassId - 1].students.push(student);
     localStorage.setItem('classes',JSON.stringify(this.classes));
 
