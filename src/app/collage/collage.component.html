@@ -10,11 +10,11 @@
     </tr>
     <tr   *ngFor="let class of classes" [ngClass]="{selected : slectedClassId === class.id}" (click)="setCurrentClass(class.id)">
       
-      <td>{{class.id}}{{class.className}}</td>
+      <td>{{class.className}}</td>
       <td>{{class.location}}</td>
       <td>{{class.teacherName}}</td>
-      <td><a>Edit</a></td>
-      <td><a>Delete</a></td>
+      <td><a routerLink="/class/{{class.id}}">Edit</a></td>
+      <td (click)="deleteClass(class.id)"><a>Delete</a></td>
     </tr>
     <button (click)="showAddClassForm()">Add Class</button>
   </table>
@@ -38,6 +38,7 @@
     </div>
 
   <div >
+    {{showStudents()}}
   <h2>Biology</h2>
   <table *ngIf="showStudents()" >
     <tr>
@@ -51,11 +52,11 @@
       <td>{{student.name}}</td>
       <td>{{student.age}}</td>
       <td>{{student.gpa}}</td>
-      <td><a>Edit</a></td>
+      <td ><a>Edit</a></td>
       <td><a>Delete</a></td>
     </tr>
   </table>
-  <button (click)="showAddStudent = true;">
+  <button *ngIf="slectedClassId" (click)="showAddStudent = true;">
       Add Student
   </button>
   <div *ngIf="showAddStudent">
@@ -72,8 +73,8 @@
         <input #gpa />
       </label>
       <!-- (click) passes input value to add() and then clears the input -->
-      <button (click)="addStudent(firstName.value,lastName.value,age.value,gpa.value); studentName.value='';age.value='';gpa.value='';showAddStudent = false;">
-        Add Student
+      <button (click)="addStudent(firstName.value,lastName.value,age.value,gpa.value); firstName.value='';lastName.value='';age.value='';gpa.value='';showAddStudent = false;">
+        submit
       </button>
       <button (click)="firstName.value='';lastName.value='';age.value='';gpa.value='';showAddStudent = false;">
         close

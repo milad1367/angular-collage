@@ -1,0 +1,19 @@
+<div>
+  <h2>Class Details</h2>
+    <label>Class Name:
+      <input [(ngModel)]="class.className" #className />
+    </label>
+    <label>Location:
+      <input [(ngModel)]="class.location" #location />
+    </label>
+    <label>Teacher Name:
+      <input [(ngModel)]="class.teacherName" #teacherName />
+    </label>
+    <!-- (click) passes input value to add() and then clears the input -->
+    <button (click)="updateClass()">
+      submit
+    </button>
+    <button (click)="goBack()">
+      go back
+    </button>
+  </div>
