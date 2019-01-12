@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Class } from '../class';
 import { CollageService } from '../collage.service';
-
+import { Student } from '../student';
 @Component({
   selector: 'app-collage',
   templateUrl: './collage.component.html',
@@ -10,18 +10,23 @@ import { CollageService } from '../collage.service';
 export class CollageComponent implements OnInit {
   showAddClass = false;
   showAddStudent = false;
-
   classes: Class[] = [];
   selectedClassStudents = [];
   slectedClassId = null;
-
+  student = {};
   constructor(private collageService: CollageService) { }
 
   ngOnInit() {
-
     this.getClasses();
-    console.log(this.collageService.getClasses());
-
+  }
+  setDefaultValue():void {
+    this.student = {
+      "id":null,
+      "firstName":"",
+      "lastName":"",
+      "age":"",
+      "gpa":""
+    }
   }
   getClasses():void{
     this.classes = this.collageService.getClasses();
@@ -31,9 +36,10 @@ export class CollageComponent implements OnInit {
     
   }
   setCurrentClass(id):void {
-    console.log(id);
     this.slectedClassId = id;
-
+    this.getStudents(id);
+    this.showAddStudent = false;
+    this.showAddClass = false;
 
   }
 
@@ -43,12 +49,11 @@ export class CollageComponent implements OnInit {
   showAddStudentForm():void {
     this.showAddStudent = true;
   }
-  getStudent(classId):any{
-    let classe = this.classes[classId - 1];
-    if(classe && classe.hasOwnProperty('students')) {
-      return classe.students
+  getStudents(classId):any{
+    if (this.collageService.hasStudent(classId)) {
+      this.selectedClassStudents = this.collageService.getStudents(classId);
+      
     }
-    return []
   }
   deleteClass(id): void {
     this.collageService.deleteClass(id); 
@@ -57,20 +62,25 @@ export class CollageComponent implements OnInit {
   addClass(className,location,teacherName):void {
        
     let newClass = this.collageService.addClass({className,location,teacherName});
-    this.classes.push(newClass);
-    
-    localStorage.setItem('classes',JSON.stringify(this.classes));
+    this.classes = this.collageService.getClasses();
     this.showAddClass = false;
-    console.log(this.classes);
   }
   showStudents():any {
     let hasStudent = this.collageService.hasStudent(this.slectedClassId);
     return hasStudent
   }
+  deleteStudent(classId,studentId):any{
+    this.collageService.deleteStudent(classId,studentId);
+    this.classes = this.collageService.getClasses();
+
+  }
 
 
-  addStudent(_first_name,_last_name,_age,_gpa):void {
-    this.collageService.addStudent(this.slectedClassId,{_first_name,_last_name,_age,_gpa});
+  addStudent(_student):void {
+    this.collageService.addStudent(this.slectedClassId,_student);
+    this.getStudents(this.slectedClassId);
+    this.showAddStudent = false;
+    this.setDefaultValue();
   }
 
 

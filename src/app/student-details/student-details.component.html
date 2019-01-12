@@ -1,0 +1,23 @@
+
+<div>
+  <h2>student</h2>
+  <label>First Name:
+    <input [(ngModel)]="student.firstName" #firstName />
+  </label>
+  <label>Last Name:
+    <input [(ngModel)]="student.lastName" #lastName />
+  </label>
+  <label>Age:
+    <input [(ngModel)]="student.age" #age />
+  </label>
+  <label>Gpa:
+    <input [(ngModel)]="student.gpa" #gpa />
+  </label>
+  <!-- (click) passes input value to add() and then clears the input -->
+  <button (click)="updateStudent(classId,student)">
+    submit
+  </button>
+  <button (click)="goBack()">
+    back
+  </button>
+</div>

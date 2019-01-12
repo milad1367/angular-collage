@@ -6,13 +6,15 @@ import { AppComponent } from './app.component';
 import { ClassesComponent } from './classes/classes.component';
 import { CollageComponent } from './collage/collage.component';
 import { ClassDetailsComponent } from './class-details/class-details.component';
+import { StudentDetailsComponent } from './student-details/student-details.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ClassesComponent,
     CollageComponent,
-    ClassDetailsComponent
+    ClassDetailsComponent,
+    StudentDetailsComponent
   ],
   imports: [
     BrowserModule,

@@ -1,11 +1,19 @@
 import { Injectable } from '@angular/core';
+import { Location } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CollageService {
   
-  constructor() { }
+  constructor(
+    private location: Location
+
+  ) { }
+
+  goBack(): void {
+    this.location.back();
+  }
   genId(array: any[]): number {
     return array.length > 0 ? Math.max(...array.map(item => item.id)) + 1 : 1;
   }
@@ -27,13 +35,22 @@ export class CollageService {
     this.updateClasses(classes);
     return newClass
   }
+  /*
   indexOfClass(_class):any {
     let classes = this.getClasses();
     let index = classes.indexOf(_class);
     return index
   }
+  indexOfStudent(classId,studentId):any {
+    let _class = this.getClass(classId);
+    let test = this.indexOfClass(_class);
+    let _student = this.getStudent(classId,studentId);
+    let students = _class.students;
+    let index = students.indexOf(_student);
+    return index
+  }
+  */
   updateClass(_class):any {
-    console.log(_class);
     let classes = this.getClasses();
     classes.find(item => {
       if(item.id === _class.id) {
@@ -64,13 +81,15 @@ export class CollageService {
    
   }
 
-  getStudent():any {
-
+  getStudents(classId):any {
+    let classes = this.getClasses()
+    if (this.hasStudent(classId)) {
+      let _class = this.getClass(classId);
+      return _class.students || [];
   }
+}
 
-  editStudent():any {
 
-  }
   hasStudent(classId):any {
     let classe = this.getClass(classId);
     if(classe && classe.hasOwnProperty('students')) {
@@ -81,19 +100,58 @@ export class CollageService {
     }
     return false
   }
+  getStudent(classId,studentId):any {
+    let _class = this.getClass(classId);
+    return _class.students.find(item => item.id === studentId)
+  }
+
   addStudent(classId,student):any {
     const _class = this.getClass(classId);
-   // const index = this.indexOfClass(_class);
     const hasStudent = this.hasStudent(classId);
     if(!hasStudent) {
       _class.students = [];
     }
-    _class.students.push(student);
+    const _id = this.genId(_class.students);
+    student.id = _id;
+    const newStudent = {
+         "id":student.id,
+         "firstName":student.firstName || "",
+         "lastName":student.lastName || "",
+         "age":student.age || "",
+         "agp":student.agp || ""
+    };
+    _class.students.push(newStudent);
 
     this.updateClass(_class);
-    debugger
   }
-  deleteStudent():any{
+  deleteStudent(classId,studentId):any{
+    let classes = this.getClasses();
+    let index = -1;
+    const _class = this.getClass(classId);
+    _class.students.find(item => {
+      
+      if(item.id === studentId) {
+         index = _class.students.indexOf(item);
+        // 
+      }
+      
+    });
+    if(index >= 0) {
+      _class.students.splice(index,1);
+       this.updateClass(_class);
 
+    }
+  }
+  
+  updateStudent(classId,student):any {
+    const _class = this.getClass(classId);
+    _class.students.find(item => {
+      if(item.id === student.id) {
+        let index = _class.students.indexOf(item);
+        _class.students[index] = student;
+        this.updateClass(_class);
+      }
+    });  
   }
 }
+
