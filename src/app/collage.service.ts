@@ -160,13 +160,27 @@ export class CollageService {
   
   updateStudent(classId,student):any {
     const _class = this.getClass(classId);
+
     _class.students.find(item => {
-      if(item.id === student.id) {
-        let index = _class.students.indexOf(item);
-        _class.students[index] = student;
-        this.updateClass(_class);
+      console.log(item.firstName,student.firstName)
+      if(item.firstName === student.firstName) {
+         this.errors.firstName = true;
       }
-    });  
+      
+    });
+    if(this.errors.firstName) {
+      return this.errors
+    }
+    if(!this.errors.firstName) {
+      _class.students.find(item => {
+        if(item.id === student.id) {
+          let index = _class.students.indexOf(item);
+          _class.students[index] = student;
+          this.updateClass(_class);
+        }
+      });  
+      return true
+    }
   }
 }
 

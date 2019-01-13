@@ -12,6 +12,8 @@ import {NgForm} from '@angular/forms';
 export class StudentDetailsComponent implements OnInit {
   classId :number;
   studentId: number;
+  firstnameIsTaken = false;
+
   student = {
     "id":"",
     "firstName":"",
@@ -34,9 +36,16 @@ export class StudentDetailsComponent implements OnInit {
   goBack(): void {
     this.collageService.goBack();
   }
-  updateStudent(_classId,_student): void {
-     this.collageService.updateStudent(_classId,_student);
-     this.goBack();
+  updateStudent(_classId,_student): any {
+    let res = this.collageService.updateStudent(_classId,_student);
+    console.log(res);
+     if(res == true) {
+      this.goBack();
+      return true
+     }
+     if(res.firstName) {
+       this.firstnameIsTaken = true;
+     }
   }
   onSubmit(f: NgForm): void {
     if(f.valid) {
