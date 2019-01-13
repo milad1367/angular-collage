@@ -17,6 +17,7 @@ export class CollageComponent implements OnInit {
   slectedClassId = null;
   student = {};
   firstnameIsTaken = false;
+  hadBestStd = false;
   constructor(private collageService: CollageService) { }
   onSubmit(f: NgForm,type) {
     console.log(f.value);  // { first: '', last: '' }
@@ -71,9 +72,35 @@ export class CollageComponent implements OnInit {
   }
   getStudents(classId):any{
     if (this.collageService.hasStudent(classId)) {
-      this.selectedClassStudents = this.collageService.getStudents(classId);
+      let students = this.collageService.getStudents(classId);
       
+      let maxGpa = Math.max.apply(Math, students.map(
+        function(o) { 
+          return o.gpa; 
+        }));
+        let maxIndex = null;
+
+        if(maxGpa > 3.2) {
+          this.hadBestStd = true;          
+          students.find(item => {
+            if(item.gpa == maxGpa) {              
+              maxIndex = students.indexOf(item);
+            }
+            
+          });
+          
+        if(maxIndex >=0) {
+          const temp = students[0];
+          students[0] = students[maxIndex];
+          students[maxIndex] = temp;
+          this.selectedClassStudents = students ;
+        }
+      }
+      else {
+        this.selectedClassStudents = students ;
+      }
     }
+    
   }
   deleteClass(id): void {
     this.collageService.deleteClass(id); 
@@ -92,6 +119,7 @@ export class CollageComponent implements OnInit {
   deleteStudent(classId,studentId):any{
     this.collageService.deleteStudent(classId,studentId);
     this.classes = this.collageService.getClasses();
+    this.getStudents(classId);
 
   }
 

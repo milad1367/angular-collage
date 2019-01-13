@@ -56,6 +56,7 @@ export class CollageService {
       if(item.id === _class.id) {
         let index = classes.indexOf(item);
          classes[index] = _class;
+         
         localStorage.setItem('classes',JSON.stringify(classes));
 
       }

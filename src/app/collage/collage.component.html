@@ -57,9 +57,9 @@
       <th></th>
       <th></th>
     </tr>
-    <tr *ngFor="let student of selectedClassStudents">
+    <tr *ngFor="let student of selectedClassStudents;let i = index">
         
-      <td>{{student.firstName}} {{student.lastName}}</td>
+      <td [ngClass]="{maxItem : (i === 0 && hadBestStd)}">{{student.firstName}} {{student.lastName}}</td>
       <td>{{student.age}}</td>
       <td>{{student.gpa}}</td>
       <td ><a routerLink="/class/{{slectedClassId}}/student/{{student.id}}">Edit</a></td>
