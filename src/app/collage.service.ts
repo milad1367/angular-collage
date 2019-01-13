@@ -5,7 +5,7 @@ import { Location } from '@angular/common';
   providedIn: 'root'
 })
 export class CollageService {
-  
+  errors = {"firstName":false};
   constructor(
     private location: Location
 
@@ -121,9 +121,22 @@ export class CollageService {
          "age":student.age || "",
          "gpa":student.gpa || ""
     };
-    _class.students.push(newStudent);
-
-    this.updateClass(_class);
+    
+    _class.students.find(item => {
+      console.log(item.firstName,newStudent.firstName)
+      if(item.firstName === newStudent.firstName) {
+         this.errors.firstName = true;
+      }
+      
+    });
+    if(this.errors.firstName) {
+      return this.errors
+    }
+   if(!this.errors.firstName) {
+     _class.students.push(newStudent);
+      this.updateClass(_class);
+      return true
+    }
   }
   deleteStudent(classId,studentId):any{
     let classes = this.getClasses();

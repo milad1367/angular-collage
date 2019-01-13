@@ -16,13 +16,16 @@ export class CollageComponent implements OnInit {
   selectedClassStudents = [];
   slectedClassId = null;
   student = {};
+  firstnameIsTaken = false;
   constructor(private collageService: CollageService) { }
   onSubmit(f: NgForm,type) {
     console.log(f.value);  // { first: '', last: '' }
     console.log(f.valid); 
     if(f.valid && type == "addStudent") {
-      this.addStudent(this.student);
-      f.resetForm();
+      let res = this.addStudent(this.student);
+      if(res) {
+        f.resetForm();
+      }
     }
     if(f.valid && type == "addClass") {
       this.addClass(f.value.className,f.value.location,f.value.teacherName);
@@ -93,11 +96,18 @@ export class CollageComponent implements OnInit {
   }
 
 
-  addStudent(_student):void {
-    this.collageService.addStudent(this.slectedClassId,_student);
+  addStudent(_student):any {
+    let res = this.collageService.addStudent(this.slectedClassId,_student);
+    if(res == true) {
     this.getStudents(this.slectedClassId);
     this.showAddStudent = false;
     this.setDefaultValue();
+    return true
+    }
+    if(res.firstName) {
+      this.firstnameIsTaken = true;
+      return false;
+    }
   }
 
 

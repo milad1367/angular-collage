@@ -75,6 +75,7 @@
           <input [(ngModel)]="student.firstName" #firstName="ngModel"  name="firstName" required  />
         </label>
         <p style="color:tomato" *ngIf="addStudent.submitted && !firstName.valid" class="help-block">firstName is required</p>
+        <p *ngIf="firstnameIsTaken" style="color:tomato">firstname is taken!</p>
     <br>
       <label>Last Name:
         <input [(ngModel)]="student.lastName" #lastName="ngModel"  name="lastName" required  />
