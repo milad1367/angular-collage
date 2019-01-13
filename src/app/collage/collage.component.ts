@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Class } from '../class';
 import { CollageService } from '../collage.service';
 import { Student } from '../student';
+import {NgForm} from '@angular/forms';
+
 @Component({
   selector: 'app-collage',
   templateUrl: './collage.component.html',
@@ -15,7 +17,22 @@ export class CollageComponent implements OnInit {
   slectedClassId = null;
   student = {};
   constructor(private collageService: CollageService) { }
+  onSubmit(f: NgForm,type) {
+    console.log(f.value);  // { first: '', last: '' }
+    console.log(f.valid); 
+    if(f.valid && type == "addStudent") {
+      this.addStudent(this.student);
+      f.resetForm();
+    }
+    if(f.valid && type == "addClass") {
+      this.addClass(f.value.className,f.value.location,f.value.teacherName);
+      f.resetForm();
+    }
+  }
+  classOnSubmit(f:NgForm) {
+    console.log(f.valid); 
 
+  }
   ngOnInit() {
     this.getClasses();
   }

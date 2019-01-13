@@ -113,12 +113,13 @@ export class CollageService {
     }
     const _id = this.genId(_class.students);
     student.id = _id;
+    console.log(student)
     const newStudent = {
          "id":student.id,
          "firstName":student.firstName || "",
          "lastName":student.lastName || "",
          "age":student.age || "",
-         "agp":student.agp || ""
+         "gpa":student.gpa || ""
     };
     _class.students.push(newStudent);
 

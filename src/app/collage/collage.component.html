@@ -8,7 +8,7 @@
       <th></th>
       <th></th>
     </tr>
-    <tr   *ngFor="let class of classes" [ngClass]="{selected : slectedClassId === class.id}" (click)="setCurrentClass(class.id)">
+    <tr *ngFor="let class of classes" [ngClass]="{selected : slectedClassId === class.id}" (click)="setCurrentClass(class.id)">
       
       <td>{{class.className}}</td>
       <td>{{class.location}}</td>
@@ -19,22 +19,32 @@
     <button (click)="showAddClassForm()">Add Class</button>
   </table>
   <div *ngIf="showAddClass">
+    <form #addClass="ngForm" (ngSubmit)="onSubmit(addClass,'addClass')" novalidate>
       <label>Class Name:
-        <input #className />
+        <input ngModel  #className="ngModel"  name="className" required  />
+        <p style="color:tomato" *ngIf="addClass.submitted && !className.valid">className is required</p>
       </label>
+      <br>
+      
       <label>Location:
-        <input #location />
+        <input ngModel  #location="ngModel"  name="location" required  />
+        <p style="color:tomato" *ngIf="addClass.submitted && !location.valid">location is required</p>
       </label>
+      <br>
       <label>Teacher Name:
-        <input #teacherName />
+        <input ngModel  #teacherName="ngModel"  name="teacherName" required />
+        <p style="color:tomato" *ngIf="addClass.submitted && !teacherName.valid">teacherName is required</p>
+
       </label>
+    
       <!-- (click) passes input value to add() and then clears the input -->
-      <button (click)="addClass(className.value,location.value,teacherName.value); className.value='';location.value='';teacherName.value=''">
+      <button type="submit">
         Add Class
       </button>
       <button (click)="className.value='';location.value='';teacherName.value='';showAddClass = false;">
         close
       </button>
+      </form>
     </div>
 
   <div >
@@ -59,26 +69,36 @@
   <button *ngIf="slectedClassId" (click)="showAddStudent = true;">
       Add Student
   </button>
-  <div *ngIf="showAddStudent">
-      <label>First Name:
-        <input required [(ngModel)]="student.firstName" #firstName />
-      </label>
+  <div  *ngIf="showAddStudent" >
+      <form #addStudent="ngForm" (ngSubmit)="onSubmit(addStudent,'addStudent')" novalidate>
+        <label>First Name:
+          <input [(ngModel)]="student.firstName" #firstName="ngModel"  name="firstName" required  />
+        </label>
+        <p style="color:tomato" *ngIf="addStudent.submitted && !firstName.valid" class="help-block">firstName is required</p>
+    <br>
       <label>Last Name:
-        <input [(ngModel)]="student.lastName" #lastName />
+        <input [(ngModel)]="student.lastName" #lastName="ngModel"  name="lastName" required  />
       </label>
+      <p style="color:tomato" *ngIf="addStudent.submitted && !lastName.valid" class="help-block">lastName is required</p>
+    <br>
       <label>Age:
-        <input [(ngModel)]="student.age" #age />
+        <input type="number" [(ngModel)]="student.age" #age="ngModel"  name="age" required  />
       </label>
+      <p style="color:tomato" *ngIf="addStudent.submitted && !age.valid" class="help-block">age is required</p>
+    <br>
       <label>Gpa:
-        <input [(ngModel)]="student.gpa" #gpa />
+        <input type="number" [(ngModel)]="student.gpa" #gpa="ngModel"  name="gpa" required  />
       </label>
+      <p style="color:tomato" *ngIf="addStudent.submitted && !gpa.valid" class="help-block">gpa is required</p>
+    <br>
       <!-- (click) passes input value to add() and then clears the input -->
-      <button (click)="addStudent(student)">
+      <button type="submit" >
         submit
       </button>
-      <button (click)="firstName.value='';lastName.value='';age.value='';gpa.value='';showAddStudent = false;">
+      <button  (click)="firstName.value='';lastName.value='';age.value='';gpa.value='';showAddStudent = false;">
         close
       </button>
+      </form>
     </div>
   </div> 
 </div>
