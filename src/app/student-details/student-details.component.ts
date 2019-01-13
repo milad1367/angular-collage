@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { CollageService } from '../collage.service';
+import {NgForm} from '@angular/forms';
 
 @Component({
   selector: 'app-student-details',
@@ -36,6 +37,12 @@ export class StudentDetailsComponent implements OnInit {
   updateStudent(_classId,_student): void {
      this.collageService.updateStudent(_classId,_student);
      this.goBack();
+  }
+  onSubmit(f: NgForm): void {
+    if(f.valid) {
+      this.updateStudent(this.classId,this.student);
+      
+    }
   }
 
   ngOnInit() {

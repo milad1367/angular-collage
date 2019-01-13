@@ -19,6 +19,7 @@
     <button (click)="showAddClassForm()">Add Class</button>
   </table>
   <div *ngIf="showAddClass">
+    <h2>Add New Class</h2>
     <form #addClass="ngForm" (ngSubmit)="onSubmit(addClass,'addClass')" novalidate>
       <label>Class Name:
         <input ngModel  #className="ngModel"  name="className" required  />
@@ -70,6 +71,7 @@
       Add Student
   </button>
   <div  *ngIf="showAddStudent" >
+      <h1>Add New Student</h1>
       <form #addStudent="ngForm" (ngSubmit)="onSubmit(addStudent,'addStudent')" novalidate>
         <label>First Name:
           <input [(ngModel)]="student.firstName" #firstName="ngModel"  name="firstName" required  />

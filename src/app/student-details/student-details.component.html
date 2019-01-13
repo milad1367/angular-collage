@@ -1,23 +1,30 @@
 
-<div>
-  <h2>student</h2>
-  <label>First Name:
-    <input [(ngModel)]="student.firstName" #firstName />
-  </label>
-  <label>Last Name:
-    <input [(ngModel)]="student.lastName" #lastName />
-  </label>
+<form #editStudent="ngForm" (ngSubmit)="onSubmit(editStudent)" novalidate>
+    <label>First Name:
+      <input [(ngModel)]="student.firstName" #firstName="ngModel"  name="firstName" required  />
+    </label>
+    <p style="color:tomato" *ngIf="editStudent.submitted && !firstName.valid" class="help-block">firstName is required</p>
+    <p *ngIf="firstnameIsTaken" style="color:tomato">firstname is taken!</p>
+    <br>
+      <label>Last Name:
+        <input [(ngModel)]="student.lastName" #lastName="ngModel"  name="lastName" required  />
+      </label>
+      <p style="color:tomato" *ngIf="editStudent.submitted && !lastName.valid" class="help-block">lastName is required</p>
+    <br>
   <label>Age:
-    <input [(ngModel)]="student.age" #age />
+    <input type="number" [(ngModel)]="student.age" #age="ngModel"  name="age" required  />
   </label>
+  <p style="color:tomato" *ngIf="editStudent.submitted && !age.valid" class="help-block">age is required</p>
+  <br>
   <label>Gpa:
-    <input [(ngModel)]="student.gpa" #gpa />
+    <input type="number" [(ngModel)]="student.gpa" #gpa="ngModel"  name="gpa" required  />
   </label>
+  <p style="color:tomato" *ngIf="editStudent.submitted && !gpa.valid" class="help-block">gpa is required</p>
   <!-- (click) passes input value to add() and then clears the input -->
-  <button (click)="updateStudent(classId,student)">
+  <button type="submit" >
     submit
   </button>
-  <button (click)="goBack()">
-    back
+  <button  (click)="goBack()">
+    close
   </button>
-</div>
+  </form>

@@ -1,19 +1,25 @@
-<div>
+<form #editClass="ngForm" (ngSubmit)="onSubmit(editClass)" novalidate>
   <h2>Class Details</h2>
     <label>Class Name:
-      <input [(ngModel)]="class.className" #className />
+      <input [(ngModel)]="class.className" #className="ngModel"  name="className" required  />
+      <p style="color:tomato" *ngIf="editClass.submitted && !className.valid">className is required</p>
     </label>
+    <br>
     <label>Location:
-      <input [(ngModel)]="class.location" #location />
+      <input [(ngModel)]="class.location" #location="ngModel" name="location" required  />
+      <p style="color:tomato" *ngIf="editClass.submitted && !location.valid">location is required</p>
     </label>
+    <br>
     <label>Teacher Name:
-      <input [(ngModel)]="class.teacherName" #teacherName />
+      <input [(ngModel)]="class.teacherName"  #teacherName="ngModel"  name="teacherName" required />
+      <p style="color:tomato" *ngIf="editClass.submitted && !teacherName.valid">teacherName is required</p>
     </label>
+    <br>
     <!-- (click) passes input value to add() and then clears the input -->
-    <button (click)="updateClass()">
+    <button type="submit">
       submit
     </button>
     <button (click)="goBack()">
       go back
     </button>
-  </div>
+  </form>

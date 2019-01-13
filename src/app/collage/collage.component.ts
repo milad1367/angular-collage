@@ -39,6 +39,7 @@ export class CollageComponent implements OnInit {
   }
   ngOnInit() {
     this.getClasses();
+    console.log(this.classes);
   }
   setDefaultValue():void {
     this.student = {

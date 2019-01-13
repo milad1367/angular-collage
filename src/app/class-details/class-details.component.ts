@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CollageService } from '../collage.service';
 import { Class } from '../class';
 import { Location } from '@angular/common';
+import {NgForm} from '@angular/forms';
 
 
 @Component({
@@ -23,6 +24,11 @@ export class ClassDetailsComponent implements OnInit {
   ngOnInit(): void {
     
     this.getClass();
+  }
+  onSubmit(f: NgForm): void {
+    if(f.valid) {
+      this.updateClass();
+    }
   }
 
   getClass(): void {
